@@ -60,3 +60,14 @@
 (animate scene-x)
 
 
+;;
+;; refactor with big-bang
+;;
+
+(define (affiche-scene etat)
+  (scene etat))
+  
+(define (nouvel-etat etat)
+  (+ 1 etat))
+
+(big-bang 0 (to-draw affiche-scene) (on-tick nouvel-etat))
