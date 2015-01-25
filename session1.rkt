@@ -1,5 +1,5 @@
 #lang racket
-(require 2htdp/image)
+(require 2htdp/image 2htdp/universe)
 
 ;;
 ;; drawing simple shapes
@@ -33,6 +33,7 @@
 (define (carre-largeur largeur)
   (rectangle largeur largeur "solid" "black"))
 
+
 ;;
 ;; merging shapes
 ;;
@@ -42,5 +43,20 @@
 (underlay/xy (carre) 5 10 (point-rouge))
 
 (underlay/xy (carre) 10 30 (point-rouge))
+
+
+;;
+;; create scene
+;;
+
+(define (scene)
+  (underlay/xy (carre) 10 10 (point-rouge)))
+
+(scene)
+
+(define (scene-x x)
+  (underlay/xy (carre) x 10 (point-rouge)))
+
+(animate scene-x)
 
 
