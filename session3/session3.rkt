@@ -1,7 +1,18 @@
 #lang racket
-
 (require 2htdp/image 2htdp/universe)
-(require "session3/myshapes.rkt")
+(require "session2/myshapes.rkt")
+
+
+(overlay/xy (carre) 10 10 (rond-rouge))
+
+(define (scene y)
+  (overlay/xy (carre) 10 y (rond-rouge)))
+
+(animate scene)
+
+;;;
+;;;
+;;;
 
 
 (define (scenarise trajectoire)
@@ -21,6 +32,8 @@
     [(> x 50)  (- 100 x)]
     [else x]))
 
+
+;;;;
 
 (define (ca-monte? x)
   (cond
