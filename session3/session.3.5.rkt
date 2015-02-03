@@ -9,9 +9,29 @@
   (overlay/xy (carre) x y forme))
 
 
-(define (trajectoire-oblique tick)
-  (cons tick tick))
+;;; rond rouge qui rebondi
 
+(define (ca-monte? x)
+  (cond
+    [(> 50 (remainder x 100)) #t]
+    [else #f]))
+
+(define (arrondi100-inferieur x)
+  (* (quotient x 100) 100))
+
+(define (arrondi100-superieur x)
+  (* (+ (quotient x 100) 1) 100))
+
+
+(define (trajectoire-rebondie x)
+  (cond
+    [(ca-monte? x) (- x (arrondi100-inferieur x))]
+    [else (- (arrondi100-superieur x) x)]))
+
+(define (place-rond-rouge scene tick)
+  (place scene (rond-rouge) trajectoire-rebondie tick))
+
+;;; rond bleu qui tourne en cercle
 
 (define (trajectoire-cercle-x tick)
   (+ 100 (* (cos (/ tick 10)) 50)))
@@ -31,15 +51,15 @@
   (overlay/xy scene x y forme)))
 
 
-
-(define (place-rond-rouge scene tick)
-  (place scene (rond-rouge) trajectoire-oblique tick))
-
 (define (place-rond-bleu scene tick)
   (place scene (rond-bleu) trajectoire-cercle tick))
 
 
+;;; les deux ronds ensembles
+
 (define (place-les-ronds tick)  
   (place-rond-rouge (place-rond-bleu (carre) tick) tick))
-;(animate (scenarise-xy trajectoire-cercle-x trajectoire-cercle-y))
+
+
+;(animate placce-les-ronds)
 
