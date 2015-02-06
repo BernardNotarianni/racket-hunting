@@ -28,20 +28,23 @@
     [(ca-monte? x) (- x (arrondi100-inferieur x))]
     [else (- (arrondi100-superieur x) x)]))
 
-(define (place-rond-rouge scene tick)
-  (place scene (rond-rouge) trajectoire-rebondie tick))
+(define (rebondi-verticalement tick)
+  (cons 10 (trajectoire-rebondie tick)))
 
 ;;; rond bleu qui tourne en cercle
 
-(define (trajectoire-cercle-x tick)
+(define (tourne-en-cercle-x tick)
   (+ 100 (* (cos (/ tick 10)) 50)))
 
-(define (trajectoire-cercle-y tick)
+(define (tourne-en-cercle-y tick)
   (+ 100 (* (sin (/ tick 10)) 50)))
 
-(define (trajectoire-cercle tick)
-  (cons (trajectoire-cercle-x tick)
-        (trajectoire-cercle-y tick)))
+(define (tourne-en-cercle tick)
+  (cons (tourne-en-cercle-x tick)
+        (tourne-en-cercle-y tick)))
+
+
+;;; les deux ronds ensembles
 
 
 (define (place scene forme trajectoire tick)
@@ -50,12 +53,11 @@
          [y (cdr position)])
   (overlay/xy scene x y forme)))
 
-
 (define (place-rond-bleu scene tick)
-  (place scene (rond-bleu) trajectoire-cercle tick))
+  (place scene (rond-bleu) tourne-en-cercle tick))
 
-
-;;; les deux ronds ensembles
+(define (place-rond-rouge scene tick)
+  (place scene (rond-rouge) rebondi-verticalement tick))
 
 (define (place-les-ronds tick)  
   (place-rond-rouge (place-rond-bleu (carre) tick) tick))
