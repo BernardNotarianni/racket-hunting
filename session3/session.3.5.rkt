@@ -55,18 +55,19 @@
 (define (place-position scene forme position)
   (overlay/xy scene (car position) (cdr position) forme))
 
-(define (place-trajectoire scene forme trajectoire tick)
-  (place-position scene forme (trajectoire tick)))
+(define (deplace-selon-trajectoire scene forme trajectoire)
+  (lambda (tick)
+    (place-position scene forme (trajectoire tick))))
 
   
-(define (place-rond-bleu scene tick)
-  (place-trajectoire scene (rond-bleu) tourne-en-cercle tick))
+(define (place-rond-bleu scene)
+  (deplace-selon-trajectoire scene (rond-bleu) tourne-en-cercle))
 
-(define (place-rond-rouge scene tick)
-  (place-trajectoire scene (rond-rouge) rebondi-verticalement tick))
+(define (place-rond-rouge scene)
+  (deplace-selon-trajectoire scene (rond-rouge) rebondi-verticalement))
 
 (define (place-les-ronds tick)  
-  (place-rond-rouge (place-rond-bleu (carre) tick) tick))
+  ((place-rond-rouge ((place-rond-bleu (carre)) tick)) tick))
 
 
 ;(animate place-les-ronds)
