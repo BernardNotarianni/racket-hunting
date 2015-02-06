@@ -1,9 +1,14 @@
 #lang racket
 (require 2htdp/image 2htdp/universe)
-(require "../session2/myshapes.rkt")
+
+(define (carre)
+  (rectangle 200 200 50 "black"))
 
 (define (rond-bleu)
   (circle 10 "solid" "blue"))
+
+(define (rond-rouge)
+  (circle 10 "solid" "red"))
 
 (define (supperpose x y forme)
   (overlay/xy (carre) x y forme))
@@ -47,21 +52,22 @@
 ;;; les deux ronds ensembles
 
 
-(define (place scene forme trajectoire tick)
-  (let* ([position (trajectoire tick)]
-         [x (car position)]
-         [y (cdr position)])
-  (overlay/xy scene x y forme)))
+(define (place-position scene forme position)
+  (overlay/xy scene (car position) (cdr position) forme))
 
+(define (place-trajectoire scene forme trajectoire tick)
+  (place-position scene forme (trajectoire tick)))
+
+  
 (define (place-rond-bleu scene tick)
-  (place scene (rond-bleu) tourne-en-cercle tick))
+  (place-trajectoire scene (rond-bleu) tourne-en-cercle tick))
 
 (define (place-rond-rouge scene tick)
-  (place scene (rond-rouge) rebondi-verticalement tick))
+  (place-trajectoire scene (rond-rouge) rebondi-verticalement tick))
 
 (define (place-les-ronds tick)  
   (place-rond-rouge (place-rond-bleu (carre) tick) tick))
 
 
-;(animate placce-les-ronds)
+;(animate place-les-ronds)
 
