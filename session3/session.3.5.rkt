@@ -10,6 +10,9 @@
 (define (rond-rouge)
   (circle 10 "solid" "red"))
 
+(define (rond-vert)
+  (circle 10 "solid" "green"))
+
 (define (supperpose x y forme)
   (overlay/xy (carre) x y forme))
 
@@ -35,6 +38,9 @@
 
 (define (rebondi-verticalement tick)
   (cons 10 (trajectoire-rebondie tick)))
+
+(define (rebondi-horizontalement tick)
+  (cons (trajectoire-rebondie tick) 50))
 
 ;;; rond bleu qui tourne en cercle
 
@@ -66,9 +72,19 @@
 (define (place-rond-rouge)
   (deplace-selon-trajectoire (rond-rouge) rebondi-verticalement))
 
-(define (place-les-ronds tick)  
+(define (place-rond-vert)
+  (deplace-selon-trajectoire (rond-vert) rebondi-horizontalement))
+
+(define (place-deux-ronds tick)
   ((place-rond-rouge) ((place-rond-bleu) (carre) tick) tick))
 
 
-;(animate place-les-ronds)
+(define (place-tous-les-ronds tick)
+  (foldl (lambda (f scene) ( ((eval f)) scene tick))
+         (carre)
+         '(place-rond-bleu place-rond-rouge place-rond-vert)))
+
+
+
+;(animate place-tous-les-ronds)
 
