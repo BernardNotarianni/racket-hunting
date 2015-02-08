@@ -74,4 +74,8 @@
   (lambda (x)
     ( f (remainder x 360))))
 
+(define (accelere f)
+  (lambda (x)
+    (f (* 2 x))))
+
 ; (anime (modulo360 rebondi))
