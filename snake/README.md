@@ -7,8 +7,8 @@ Un jeu de [Snake](http://en.wikipedia.org/wiki/Snake_%28video_game%29) en [Racke
 Le plan prévu pour le moment. Il pourra changer au fur et à mesure que nous avancerons.
 
 - [X] Afficher un fond d'écran (un carré gris)
-- [ ] Afficher un carré rouge sur le fond d'écran
-- [ ] Déplacer le carré rouge avec les flèches du clavier
+- [X] Afficher un carré rouge sur le fond d'écran
+- [X] Déplacer le carré rouge avec les flèches du clavier
   - Lorsque le carré sort d'un coté de l'écran, il rentre de l'autre
 - [ ] Afficher un serpent
 - [ ] Déplacer le serpent
