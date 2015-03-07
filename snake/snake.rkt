@@ -20,39 +20,71 @@
 (define (tete-du-serpent)
   (square 10 "solid" "red"))
 
-(define (limite-droite)
-  (- (taille-du-jeu) (image-width (tete-du-serpent))))
 
 (define (limite-gauche)
   0)  
+
+(define (limite-droite)
+  (- (taille-du-jeu) (image-width (tete-du-serpent))))
+
+(define (limite-en-haut)
+  0)  
+
+(define (limite-en-bas)
+  (- (taille-du-jeu) (image-height (tete-du-serpent))))
+
   
-  
+
 (define (etat-de-depart)
   (position 10 10))
 
 (define (nouvel-etat etat-precedent)
   etat-precedent)
 
-(define (va-a-gauche etat)
+
+
+
+(define (deplace-horizontalement etat deplacement)
   (define (x) (position-x etat))
   (define (y) (position-y etat))
+  (define (nouveau-x) (+ (x) deplacement))
   (cond 
-    [(= (limite-gauche) (x)) (position (limite-droite) (y))]
-    [else (position (- (x) 10) (y))]))
+    [(< (nouveau-x) (limite-gauche)) (position (limite-droite) (y))]
+    [(< (limite-droite) (nouveau-x)) (position (limite-gauche) (y))]
+    [else (position (nouveau-x) (y))]))
 
+(define (va-a-gauche etat)
+  (deplace-horizontalement etat -10))
 
 (define (va-a-droite etat)
+  (deplace-horizontalement etat +10))
+
+
+
+(define (deplace-verticalement etat deplacement)
   (define (x) (position-x etat))
   (define (y) (position-y etat))
+  (define (nouveau-y) (+ (y) deplacement))
   (cond 
-    [(= (limite-droite) (x)) (position (limite-gauche) (y))]
-    [else (position (+ (x) 10) (y))]))
+    [(< (nouveau-y) (limite-en-haut)) (position (x) (limite-en-bas))]
+    [(< (limite-en-bas) (nouveau-y)) (position (x) (limite-en-haut))]
+    [else (position (x) (nouveau-y))]))
+
+(define (va-en-haut etat)
+  (deplace-verticalement etat -10))
+
+(define (va-en-bas etat)
+  (deplace-verticalement etat +10))
+
+
 
 
 (define (clavier-detecté etat a-key)
   (cond
     [(key=? a-key "left")  (va-a-gauche etat)]
     [(key=? a-key "right") (va-a-droite etat)]
+    [(key=? a-key "up")    (va-en-haut etat)]
+    [(key=? a-key "down")  (va-en-bas etat)]
     [else etat]))
 
   
